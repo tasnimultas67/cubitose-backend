@@ -88,6 +88,7 @@ run().catch(console.dir);
 
 app.get('/', (req, res) => {
     res.send('Cubitose is running!')
+    res.sendStatus(200)
 })
 
 app.listen(port, () => {
