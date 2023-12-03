@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+const jwt = require('jsonwebtoken')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const app = express();
@@ -32,13 +33,19 @@ async function run() {
     const portfolio = cubitoseDBCollection.collection("portfolio");
     const review = cubitoseDBCollection.collection("review")
 
+
+    // JWT 
+    app.post('/jwt', (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
+      res.send({token})
+    })
+
     // insert portfolio data
     app.post('/portfolio', async(req, res) => {
       const newPortfolio = req.body;
       const result = await portfolio.insertOne(newPortfolio);
       res.send(result)
-      // Print the ID of the inserted document
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
     })
     // Get Portfolio data
     app.get('/portfolio', async(req, res) => {
@@ -59,8 +66,6 @@ async function run() {
       const newReview = req.body;
       const result = await review.insertOne(newReview);
       res.send(result)
-      // Print the ID of the inserted document
-    console.log(`A document was inserted with the _id: ${result.insertedId}`);
     })
     // Get review data
     app.get('/review', async(req, res) => {
