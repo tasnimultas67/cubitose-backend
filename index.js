@@ -62,6 +62,27 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+    // Web Development Portfolio data
+    app.get('/portfolio/web-development', async (req, res) => {
+      const query = { portfolioServiceCategory: "Web-Development" };
+      const cursor = portfolio.find(query);
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // Graphics Design Portfolio data
+    app.get('/portfolio/graphics-design', async (req, res) => {
+      const query = { portfolioServiceCategory: "Graphics-Design" };
+      const cursor = portfolio.find(query);
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // Digital-Marketing Portfolio data
+    app.get('/portfolio/digital-marketing', async (req, res) => {
+      const query = { portfolioServiceCategory: "Digital-Marketing" };
+      const cursor = portfolio.find(query);
+      const result = await cursor.toArray()
+      res.send(result)
+    })
     // Get Portfolio data by ID
     app.get("/portfolio/:id", async (req, res) => {
       const id = req.params.id;
@@ -79,6 +100,27 @@ async function run() {
     // Get review data
     app.get('/review', async (req, res) => {
       const cursor = review.find();
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // Web Development Review
+    app.get('/review/web-development', async (req, res) => {
+      const query = { serviceCategory: "Web-Development" };
+      const cursor = review.find(query);
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // Graphics Design Review
+    app.get('/review/graphics-design', async (req, res) => {
+      const query = { serviceCategory: "Graphics-Design" };
+      const cursor = review.find(query);
+      const result = await cursor.toArray()
+      res.send(result)
+    })
+    // Digital Marketing Review
+    app.get('/review/digital-marketing', async (req, res) => {
+      const query = { serviceCategory: "Digital-Marketing" };
+      const cursor = review.find(query);
       const result = await cursor.toArray()
       res.send(result)
     })
