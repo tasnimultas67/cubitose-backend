@@ -62,6 +62,36 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+    // Delete Single Portfolio data
+    app.delete('/portfolio/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await portfolio.deleteOne(query)
+      res.send(result);
+    })
+    // Update Single Portfolio data
+    app.put('/portfolio/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatePortfolio = req.body;
+      const upPortfolio = {
+        $set: {
+          portfolioName: updatePortfolio.portfolioName,
+          portfolioShortDescription: updatePortfolio.portfolioShortDescription,
+          portfolioDetails: updatePortfolio.portfolioDetails,
+          portfolioThumbnail: updatePortfolio.portfolioThumbnail,
+          portfolioLink: updatePortfolio.portfolioLink,
+          portfolioCategory: updatePortfolio.portfolioCategory,
+          portfolioYear: updatePortfolio.portfolioYear,
+          portfolioCountry: updatePortfolio.portfolioCountry,
+          portfolioClientName: updatePortfolio.portfolioClientName,
+          portfolioServiceCategory: updatePortfolio.portfolioServiceCategory,
+        },
+      }
+      const result = await portfolio.updateOne(filter, upPortfolio, options)
+      res.send(result);
+    })
     // Web Development Portfolio data
     app.get('/portfolio/web-development', async (req, res) => {
       const query = { portfolioServiceCategory: "Web-Development" };
