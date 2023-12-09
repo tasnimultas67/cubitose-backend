@@ -62,6 +62,13 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
+    // Delete Single Team Data
+    app.delete('/teams/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await teams.deleteOne(query)
+      res.send(result);
+    })
     // insert portfolio data
     app.post('/portfolio', async (req, res) => {
       const newPortfolio = req.body;
