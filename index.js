@@ -69,6 +69,27 @@ async function run() {
       const result = await teams.deleteOne(query)
       res.send(result);
     })
+    // Update Single Team Data
+    app.put('/portfolio/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updateTeam = req.body;
+      const upTeam = {
+        $set: {
+          teamName: updateTeam.teamName,
+          teamRole: updateTeam.teamRole,
+          teamImg: updateTeam.teamImg,
+          teamFacebook: updateTeam.teamFacebook,
+          teamInstagram: updateTeam.teamInstagram,
+          teamTwitter: updateTeam.teamTwitter,
+          teamLinkedIn: updateTeam.teamLinkedIn,
+          teamWebsite: updateTeam.teamWebsite,
+        },
+      }
+      const result = await teams.updateOne(filter, upTeam, options)
+      res.send(result);
+    })
     // insert portfolio data
     app.post('/portfolio', async (req, res) => {
       const newPortfolio = req.body;
