@@ -41,6 +41,7 @@ async function run() {
     const cubitoseDBCollection = client.db("cubitoseDB");
     const portfolio = cubitoseDBCollection.collection("portfolio");
     const review = cubitoseDBCollection.collection("review")
+    const teams = cubitoseDBCollection.collection("teams")
 
 
     // JWT 
@@ -49,13 +50,25 @@ async function run() {
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '7d' });
       res.send({ token })
     })
-
+    // Insert Teams Data
+    app.post('/teams', async (req, res) => {
+      const newTeam = req.body;
+      const result = await teams.insertOne(newTeam);
+      res.send(result)
+    })
+    // Get Teams Data
+    app.get('/teams', async (req, res) => {
+      const cursor = teams.find();
+      const result = await cursor.toArray()
+      res.send(result)
+    })
     // insert portfolio data
     app.post('/portfolio', async (req, res) => {
       const newPortfolio = req.body;
       const result = await portfolio.insertOne(newPortfolio);
       res.send(result)
     })
+
     // Get Portfolio data
     app.get('/portfolio', async (req, res) => {
       const cursor = portfolio.find();
