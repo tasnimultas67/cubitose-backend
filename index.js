@@ -70,7 +70,7 @@ async function run() {
       res.send(result);
     })
     // Update Single Team Data
-    app.put('/portfolio/:id', async (req, res) => {
+    app.put('/teams/:id', async (req, res) => {
       const id = req.params.id;
       const filter = { _id: new ObjectId(id) };
       const options = { upsert: true };
