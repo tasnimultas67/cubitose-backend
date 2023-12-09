@@ -69,6 +69,13 @@ async function run() {
       const result = await teams.deleteOne(query)
       res.send(result);
     })
+    // Get Single Team Data
+    app.get("/teams/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await teams.findOne(query)
+      res.send(result)
+    })
     // Update Single Team Data
     app.put('/teams/:id', async (req, res) => {
       const id = req.params.id;
@@ -154,7 +161,7 @@ async function run() {
       const result = await cursor.toArray()
       res.send(result)
     })
-    // Get Portfolio data by ID
+    // Get Single Portfolio data
     app.get("/portfolio/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
